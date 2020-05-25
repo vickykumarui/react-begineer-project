@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import classes from './App.module.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 
 // this is also stateful/container/smartful component
@@ -49,10 +50,12 @@ class App extends Component {
     if(this.state.toggleName && this.state.persons.length){
     person =  this.state.persons.map((person, i) => {
         return (
-          <Person key={i} idx = {i} name = {person.name} click = {this.deleteNameHandler} 
+          <ErrorBoundary key={i}>
+          <Person  idx = {i} name = {person.name} click = {this.deleteNameHandler} 
               changed = {this.changeNameHandler}>
                 {person.hobbies ? <div>{person.hobbies}</div> : ''}
           </Person>
+          </ErrorBoundary>
         );
     });
     btnClass = btnClass + ' ' + classes.Active;
