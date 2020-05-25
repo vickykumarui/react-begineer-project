@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
 import './App.css';
-import Radium, { StyleRoot } from 'radium';
 import Person from './Person/Person';
+import Styled from 'styled-components';
 
 
 // this is also stateful/container/smartful component
 
 // class based component
 
+const StyledButton = Styled.button`
+background-color: ${ (props) => props.toggled ? 'red' : 'green'};
+border: 1px solid red;
+padding: 8px;
+cursor: pointer;
+&:hover {
+  background-color: ${ (props) => props.toggled ? 'darkred' : 'lightgreen'};
+  color: black;
+}
+
+`
 
 class App extends Component {
   /* state is resrved word can be used only when we make class as component (not in case of function) used to manage data inside component, special thing about starewhen there is  change in any property values of state react will rerender the component
@@ -48,16 +59,16 @@ class App extends Component {
   }
   // we can either return jsx or create element using react.createElement
   render() {
-    const btnStyle = {
-      backgroundColor: 'red',
-      border: '1px solid red',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover':{
-        backgroundColor: 'darkred',
-        color: 'black'
-      }
-    }
+    // const btnStyle = {
+    //   backgroundColor: 'red',
+    //   border: '1px solid red',
+    //   padding: '8px',
+    //   cursor: 'pointer',
+    //   ':hover':{
+    //     backgroundColor: 'darkred',
+    //     color: 'black'
+    //   }
+    // }
 
     
     let person = null;
@@ -81,11 +92,11 @@ class App extends Component {
           </Person>
         );
     });
-    btnStyle.backgroundColor = 'green';
-    btnStyle[':hover'] = {
-      backgroundColor: 'lightgreen',
-      color: 'black'
-    }
+    // btnStyle.backgroundColor = 'green';
+    // btnStyle[':hover'] = {
+    //   backgroundColor: 'lightgreen',
+    //   color: 'black'
+    // }
   }
 
   let pClass = '';
@@ -98,11 +109,13 @@ class App extends Component {
   }
    
     return (
-      <StyleRoot>
+     
     <div className="App">     
      <h1>Hi I am react App</h1>
      <p className = {pClass}>This is relly working</p>
-     <button style = {btnStyle} onClick = {this.toggleNameHandler}>Toggle Persons</button>
+     <StyledButton toggled = {this.state.toggleName} onClick = {this.toggleNameHandler}>
+     Toggle Persons
+     </StyledButton>
      { person }
        
      { this.state.toggleName && this.state.persons.length ?
@@ -111,14 +124,14 @@ class App extends Component {
   }
     
     </div>
-    </StyleRoot>
+   
   );
     }
   // Above code is equivalent to
  // return React.createElement('div',{className: 'App'}, React.createElement('h1', null,'Hi i am react element'));
 }
 
-export default Radium(App);
+export default App;
 
 
 
