@@ -1,24 +1,11 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.module.css';
 import Person from './Person/Person';
-import Styled from 'styled-components';
 
 
 // this is also stateful/container/smartful component
 
-// class based component
 
-const StyledButton = Styled.button`
-background-color: ${ (props) => props.toggled ? 'red' : 'green'};
-border: 1px solid red;
-padding: 8px;
-cursor: pointer;
-&:hover {
-  background-color: ${ (props) => props.toggled ? 'darkred' : 'lightgreen'};
-  color: black;
-}
-
-`
 
 class App extends Component {
   /* state is resrved word can be used only when we make class as component (not in case of function) used to manage data inside component, special thing about starewhen there is  change in any property values of state react will rerender the component
@@ -41,8 +28,6 @@ class App extends Component {
   }
 
   deleteNameHandler  = (index)=> {
-    console.log(this)
-    
     const indexToBeUpdated = index || index === 0 ? index : 2;
  
    const newPersonArr = [...this.state.persons];
@@ -59,30 +44,8 @@ class App extends Component {
   }
   // we can either return jsx or create element using react.createElement
   render() {
-    // const btnStyle = {
-    //   backgroundColor: 'red',
-    //   border: '1px solid red',
-    //   padding: '8px',
-    //   cursor: 'pointer',
-    //   ':hover':{
-    //     backgroundColor: 'darkred',
-    //     color: 'black'
-    //   }
-    // }
-
-    
     let person = null;
-    // const person = [];
-    // if(this.state.toggleName){
-    //   for(let i = 0; i< this.state.persons.length - 1; i++){
-    //     person.push(
-    //     <Person key={i} idx = {i} name = {this.state.persons[i].name} click = {this.deleteNameHandler} 
-    //     changed = {this.changeNameHandler}>
-    //       {this.state.persons[i].hobbies ? <div>{this.state.persons[i].hobbies}</div> : ''}
-    //       </Person>
-    //       )
-    //   }
-    // }
+    let btnClass = classes.Button;
     if(this.state.toggleName && this.state.persons.length){
     person =  this.state.persons.map((person, i) => {
         return (
@@ -92,30 +55,26 @@ class App extends Component {
           </Person>
         );
     });
-    // btnStyle.backgroundColor = 'green';
-    // btnStyle[':hover'] = {
-    //   backgroundColor: 'lightgreen',
-    //   color: 'black'
-    // }
+    btnClass = btnClass + ' ' + classes.Active;
   }
 
   let pClass = '';
   if(this.state.persons.length > 2){
-    pClass = pClass + 'bold red';
+    pClass = pClass + classes.bold + ' ' + classes.red;
   } else if( this.state.persons.length > 1 && this.state.persons.length <= 2) {
-    pClass = 'red';
+    pClass = classes.red;
   } else {
     pClass = '';
   }
    
     return (
      
-    <div className="App">     
+    <div className= {classes.App}>     
      <h1>Hi I am react App</h1>
      <p className = {pClass}>This is relly working</p>
-     <StyledButton toggled = {this.state.toggleName} onClick = {this.toggleNameHandler}>
+     <button className = {btnClass} onClick = {this.toggleNameHandler}>
      Toggle Persons
-     </StyledButton>
+     </button>
      { person }
        
      { this.state.toggleName && this.state.persons.length ?
@@ -127,8 +86,7 @@ class App extends Component {
    
   );
     }
-  // Above code is equivalent to
- // return React.createElement('div',{className: 'App'}, React.createElement('h1', null,'Hi i am react element'));
+  
 }
 
 export default App;
