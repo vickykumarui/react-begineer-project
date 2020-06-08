@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import classes from './App.module.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+// import Person from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cocpit/Cocpit';
 
 
 // this is also stateful/container/smartful component
@@ -11,16 +12,29 @@ import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 class App extends Component {
   /* state is resrved word can be used only when we make class as component (not in case of function) used to manage data inside component, special thing about starewhen there is  change in any property values of state react will rerender the component
   */
-  state = {
-    persons: [
-      {name: 'vicky', age: 28},
-      {name: 'vikram', age: 30, hobbies: "My hobbies racing" },
-      {name: 'vivek', age: 32},
-      {name: 'manjumath', age: 29 }
-    ],
-    toggleName: false
+ constructor(props){
+    super(props);
+    console.log('[App.js] constructor');
+    this.state = {
+      persons: [
+        {name: 'vicky', age: 28},
+        {name: 'vikram', age: 30, hobbies: "My hobbies racing" },
+        {name: 'vivek', age: 32},
+        {name: 'manjumath', age: 29 }
+      ],
+      toggleName: false
+    
+    }
+ }
+
+ static getDerivedStateFromProps(props,state){
+    console.log('[App.js] getDerivedStateFromProps',props);
+    return state;
+ }
   
-  }
+ componentDidMount(){
+   console.log('[App.js] Component did mount')
+ }
   
   toggleNameHandler = () =>{
     this.setState({
@@ -45,46 +59,15 @@ class App extends Component {
   }
   // we can either return jsx or create element using react.createElement
   render() {
-    let person = null;
-    let btnClass = classes.Button;
-    if(this.state.toggleName && this.state.persons.length){
-    person =  this.state.persons.map((person, i) => {
-        return (
-          <ErrorBoundary key={i}>
-          <Person  idx = {i} name = {person.name} click = {this.deleteNameHandler} 
-              changed = {this.changeNameHandler}>
-                {person.hobbies ? <div>{person.hobbies}</div> : ''}
-          </Person>
-          </ErrorBoundary>
-        );
-    });
-    btnClass = btnClass + ' ' + classes.Active;
-  }
-
-  let pClass = '';
-  if(this.state.persons.length > 2){
-    pClass = pClass + classes.bold + ' ' + classes.red;
-  } else if( this.state.persons.length > 1 && this.state.persons.length <= 2) {
-    pClass = classes.red;
-  } else {
-    pClass = '';
-  }
-   
+  //  let person = null;
+    console.log('[App.js] render')
     return (
      
-    <div className= {classes.App}>     
-     <h1>Hi I am react App</h1>
-     <p className = {pClass}>This is relly working</p>
-     <button className = {btnClass} onClick = {this.toggleNameHandler}>
-     Toggle Persons
-     </button>
-     { person }
-       
-     { this.state.toggleName && this.state.persons.length ?
-     <Person key = {this.state.persons.length -1} idx = {this.state.persons.length -1} name = {this.state.persons[this.state.persons.length -1].name} click = {this.deleteNameHandler} changed = {this.changeNameHandler}></Person>
-     : ''
-  }
+    <div className= {classes.App}>  
+    <Cockpit title = {this.props.appTitle} persons = {this.state.persons} toggleName = {this.state.toggleName} toggleNameHandler = {this.toggleNameHandler} />   
     
+     <Persons toggleName = {this.state.toggleName} persons = {this.state.persons} deleteNameHandler = {this.deleteNameHandler}  changeNameHandler = {this.changeNameHandler} />
+           
     </div>
    
   );

@@ -1,0 +1,29 @@
+
+.red {
+    color: red;
+  }
+  
+  .bold{
+    font-weight: bold;
+  }
+  
+  .Button {
+    background-color: red;
+  border: 1px solid red;
+  padding: 8px;
+  cursor: pointer;
+  
+  }
+  
+  .Button.Active{
+    background-color: green
+  }
+  
+  .Button:hover {
+    background-color: darkred;
+    color: black;
+  }
+  
+  .Button.Active:hover{
+    background-color: lightgreen
+  }

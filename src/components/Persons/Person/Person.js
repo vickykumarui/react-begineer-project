@@ -7,7 +7,7 @@ import classes from './Person.module.css';
 
 const person = (props) =>{
     // props is used to receive data from parent component
-    
+    console.log('[Person.js] rendering')
     const getAge = (age) =>{
         return age;
     }
