@@ -1,7 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './Cocpit.module.css';
 const Cockpit = (props) =>
 {
+  useEffect(() =>{
+    console.log('[Cocpit.js] useEffect called when person change');
+  },[props.persons]);
+
+  useEffect(() =>{
+    console.log('[Cocpit.js] useEffect called only once');
+  },[])
     let btnClass = classes.Button;
 
 
