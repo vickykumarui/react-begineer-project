@@ -27,13 +27,23 @@ class App extends Component {
     }
  }
 
- static getDerivedStateFromProps(props,state){
-    console.log('[App.js] getDerivedStateFromProps',props);
-    return state;
- }
+//  static getDerivedStateFromProps(props,state){
+//     console.log('[App.js] getDerivedStateFromProps',props);
+//     return state;
+//  }
   
- componentDidMount(){
-   console.log('[App.js] Component did mount')
+ componentDidMount(prevProps, prevState){
+   console.log('[App.js] Component did mount');
+   
+ }
+
+ shouldComponentUpdate(){
+   console.log('[App.js] shouldComponentMount');
+   return true;
+ }
+
+ componentDidUpdate(){
+   console.log('[App.js] componentDidUpdate')
  }
   
   toggleNameHandler = () =>{

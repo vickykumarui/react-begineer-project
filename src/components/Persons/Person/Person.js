@@ -1,34 +1,38 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './Person.module.css';
+
 //it is stateless component or presentational/dump component
 // here p is small when we use it as component than only mandatory to keep capital(i.e where it gets imported)
 
 
 
-const person = (props) =>{
+class person extends Component{
     // props is used to receive data from parent component
-    console.log('[Person.js] rendering')
-    const getAge = (age) =>{
+    
+     getAge = (age) =>{
         return age;
     }
 
-    const clickHandler = (event) =>{
-        props.click(props.idx);
+     clickHandler = (event) =>{
+        this.props.click(this.props.idx);
     }
 
-    const changeHandler = (event) =>{
-        props.changed(event, props.idx)
+     changeHandler = (event) =>{
+        this.props.changed(event, this.props.idx)
     }
 
-return (
-    <div className = {classes.Person}>
-        <p onClick = {clickHandler}>I am person {props.name} and age {getAge(Math.floor(Math.random()*30))}</p>
-        {props.children ? <div>{props.children}</div> : ''}
-        <label>Change your name</label>
-        <input value = {props.name} onChange = {changeHandler} type = "text"/>
-    </div>
+    render(){
+        console.log('[Person.js] rendering');
+        return (
+            <div className = {classes.Person}>
+                <p onClick = {this.clickHandler}>I am person {this.props.name} and age {this.getAge(Math.floor(Math.random()*30))}</p>
+                {this.props.children ? <div>{this.props.children}</div> : ''}
+                <label>Change your name</label>
+                <input value = {this.props.name} onChange = {this.changeHandler} type = "text"/>
+            </div>
 
-)
+        )
+    }
 }
 
 export default person;
