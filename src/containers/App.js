@@ -22,7 +22,8 @@ class App extends Component {
         {name: 'vivek', age: 32},
         {name: 'manjumath', age: 29 }
       ],
-      toggleName: false
+      toggleName: false,
+      showCocPit: true
     
     }
  }
@@ -31,7 +32,8 @@ class App extends Component {
 //     console.log('[App.js] getDerivedStateFromProps',props);
 //     return state;
 //  }
-  
+
+
  componentDidMount(prevProps, prevState){
    console.log('[App.js] Component did mount');
    
@@ -67,6 +69,9 @@ class App extends Component {
     newPersonArr[indexToBeUpdated].name = event.target.value ;
     this.setState({ persons : newPersonArr })
   }
+  toggleCockPit = () =>{
+    this.setState({showCocPit : !this.state.showCocPit});
+  }
   // we can either return jsx or create element using react.createElement
   render() {
   //  let person = null;
@@ -74,7 +79,8 @@ class App extends Component {
     return (
      
     <div className= {classes.App}>  
-    <Cockpit title = {this.props.appTitle} persons = {this.state.persons} toggleName = {this.state.toggleName} toggleNameHandler = {this.toggleNameHandler} />   
+    <button onClick = {this.toggleCockPit}>Remove Cockpit</button>
+    { this.state.showCocPit ? <Cockpit title = {this.props.appTitle} persons = {this.state.persons} toggleName = {this.state.toggleName} toggleNameHandler = {this.toggleNameHandler} /> : ''}   
     
      <Persons toggleName = {this.state.toggleName} persons = {this.state.persons} deleteNameHandler = {this.deleteNameHandler}  changeNameHandler = {this.changeNameHandler} />
            

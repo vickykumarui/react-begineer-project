@@ -20,6 +20,9 @@ class person extends Component{
      changeHandler = (event) =>{
         this.props.changed(event, this.props.idx)
     }
+    componentWillUnmount(){
+        console.log('[Persons.js] unmount called when component is destroyed')
+    }
 
     render(){
         console.log('[Person.js] rendering');

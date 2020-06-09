@@ -8,6 +8,9 @@ const Cockpit = (props) =>
 
   useEffect(() =>{
     console.log('[Cocpit.js] useEffect called only once');
+    return () =>{
+      console.log('[cocpit.js] cleanup work')
+    }
   },[])
     let btnClass = classes.Button;
 
