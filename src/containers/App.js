@@ -3,8 +3,7 @@ import classes from './App.module.css';
 // import Person from '../components/Persons/Person/Person';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cocpit/Cocpit';
-
-
+import AuthContext from '../context/auth-context';
 // this is also stateful/container/smartful component
 
 
@@ -22,10 +21,12 @@ class App extends Component {
         {name: 'vivek', age: 32},
         {name: 'manjumath', age: 29 }
       ],
-      toggleName: false,
-      showCocPit: true
+      toggleName: true,
+      showCocPit: true,
+      deleteCounter: 0,
+      authenticated: false
     
-    }
+    };
  }
 
 //  static getDerivedStateFromProps(props,state){
@@ -39,6 +40,14 @@ class App extends Component {
    
  }
 
+ loginHandler = () =>{
+   console.log('vicky');
+      this.setState((prevState, props) =>{
+        return{
+          authenticated: !prevState.authenticated
+        };
+      });
+ }
  shouldComponentUpdate(){
    console.log('[App.js] shouldComponentMount');
    return true;
@@ -52,15 +61,25 @@ class App extends Component {
     this.setState({
       toggleName : !this.state.toggleName
     })
-  }
+  };
 
   deleteNameHandler  = (index)=> {
     const indexToBeUpdated = index || index === 0 ? index : 2;
  
    const newPersonArr = [...this.state.persons];
-   newPersonArr.splice(indexToBeUpdated,1);
+   newPersonArr.splice(indexToBeUpdated, 1 );
   
-    this.setState({ persons : newPersonArr })
+    // this.setState({ 
+    //   persons : newPersonArr,
+    //   updateCounter: this.state.deleteCounter + 1 
+    //   });
+
+    this.setState((prevState, props) => {
+        return { 
+            persons : newPersonArr,
+            deleteCounter: prevState.deleteCounter + 1 
+            }
+    });
   }
 
   changeNameHandler = (event, idx) =>{
@@ -80,10 +99,14 @@ class App extends Component {
      
     <div className= {classes.App}>  
     <button onClick = {this.toggleCockPit}>Remove Cockpit</button>
+    <AuthContext.Provider value = {{
+      authenticated: this.state.authenticated,
+      login: this.loginHandler
+    }}>
     { this.state.showCocPit ? <Cockpit title = {this.props.appTitle} persons = {this.state.persons} toggleName = {this.state.toggleName} toggleNameHandler = {this.toggleNameHandler} /> : ''}   
-    
-     <Persons toggleName = {this.state.toggleName} persons = {this.state.persons} deleteNameHandler = {this.deleteNameHandler}  changeNameHandler = {this.changeNameHandler} />
-           
+   
+    {this.state.toggleName ? <Persons persons = {this.state.persons} deleteNameHandler = {this.deleteNameHandler}  changeNameHandler = {this.changeNameHandler} /> : '' }
+    </AuthContext.Provider>     
     </div>
    
   );

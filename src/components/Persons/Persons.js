@@ -1,16 +1,21 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Person from './Person/Person';
 
-class Persons extends Component {
+class Persons extends PureComponent {
 
   // static getDerivedStateFromProps(props, state){
   //   console.log('[Persons.js] getDerivedStateFromProps', state);
   //   return state;
   // }
 
-  shouldComponentUpdate(){
+  shouldComponentUpdate(nextProps, nextState){
     console.log('[Persons.js] shouldComponentUpdate');
+    if(nextProps.persons !== this.props.persons){
     return true; // it should return true or false based on if we want to update it or not
+    } else{
+      return false;
+    }
+    // we can add logic to restrict update for performance
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState){
@@ -24,7 +29,7 @@ class Persons extends Component {
     render() {
       let person;
 
-      if(this.props.toggleName && this.props.persons.length){
+      if(this.props.persons.length){
          person =  this.props.persons.map((person, i) => {
             return (
               
